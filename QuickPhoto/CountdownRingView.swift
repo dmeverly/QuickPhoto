@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Circular countdown that drains as the pose time runs out and turns orange near the end.
+/// Circular countdown turns orange near the end.
 struct CountdownRingView: View {
     let timeRemainingFraction: Double
     let remainingSeconds: Double

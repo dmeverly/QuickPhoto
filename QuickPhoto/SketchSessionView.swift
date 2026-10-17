@@ -6,10 +6,11 @@ struct SketchSessionView: View {
     @State private var selectedPickerItems: [PhotosPickerItem] = []
     @State private var areControlsVisible = true
     @State private var isCustomTimeSheetPresented = false
+    @State private var isRemoveAllConfirmationPresented = false
 
     var body: some View {
         ZStack {
-            // Artful backdrop between sessions; plain black while drawing so nothing competes with the photo.
+            // Artful backdrop between sessions
             if viewModel.isSessionActive {
                 Color.black.ignoresSafeArea()
             } else {
@@ -46,6 +47,15 @@ struct SketchSessionView: View {
                 viewModel.selectSecondsPerPhoto(chosenSeconds)
             }
         }
+        .confirmationDialog(
+            "Remove all \(viewModel.savedPhotoCount) photos?",
+            isPresented: $isRemoveAllConfirmationPresented,
+            titleVisibility: .visible
+        ) {
+            Button("Remove All Photos", role: .destructive) { viewModel.removeAllPhotos() }
+        } message: {
+            Text("This deletes them from QuickPhoto only. The originals in your photo library aren't affected.")
+        }
     }
 
     // MARK: - Main content by session state
@@ -67,7 +77,7 @@ struct SketchSessionView: View {
                 .resizable()
                 .scaledToFit()
                 .grayscale(viewModel.isGrayscaleEnabled ? 1 : 0)
-                .id(currentPhoto)                       // gives each photo its own crossfade
+                .id(currentPhoto)
                 .transition(.opacity)
                 .ignoresSafeArea()
                 .overlay {
@@ -171,7 +181,7 @@ struct SketchSessionView: View {
             Spacer()
         }
         .padding()
-        .allowsHitTesting(false)   // taps pass through to the photo
+        .allowsHitTesting(false)
     }
 
     // MARK: - Controls
@@ -230,7 +240,7 @@ struct SketchSessionView: View {
         } label: {
             Label("Time per Photo", systemImage: "timer")
         }
-        .disabled(viewModel.isSessionActive)   // change the time between sessions, not mid-session
+        .disabled(viewModel.isSessionActive)
     }
 
     private var moreOptionsMenu: some View {
@@ -243,7 +253,8 @@ struct SketchSessionView: View {
                 Button("End Session", role: .destructive) { viewModel.endSession() }
             }
 
-            Button("Remove All Photos", role: .destructive) { viewModel.removeAllPhotos() }
+            Button("Remove All Photos", role: .destructive) { isRemoveAllConfirmationPresented = true }
+                .disabled(viewModel.savedPhotoCount == 0)
         } label: {
             Label("More", systemImage: "ellipsis.circle")
         }
@@ -296,7 +307,6 @@ private struct IdleTitleView: View {
 
 // MARK: - Custom time entry
 
-/// Lets her dial in any time per photo using minute and second wheels.
 private struct CustomTimePerPhotoSheet: View {
     let onSave: (Double) -> Void
 

@@ -17,7 +17,7 @@ struct QuickPhoto_MasterControl: App {
                     .zIndex(1)
                 }
             }
-            .preferredColorScheme(.dark)   // light status bar and sheets to match the dark artwork
+            .preferredColorScheme(.dark)   
         }
     }
 }

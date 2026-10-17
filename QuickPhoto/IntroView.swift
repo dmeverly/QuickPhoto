@@ -1,8 +1,5 @@
 import SwiftUI
 
-/// Launch intro: a brush circle paints itself in, then "Made for Lorelei"
-/// is written across the middle with a flourish underneath, followed by
-/// "with Love". Tap to skip.
 struct IntroView: View {
     let onFinished: () -> Void
 
@@ -35,8 +32,7 @@ struct IntroView: View {
                     .font(.artScript(size: 72))
                     .foregroundStyle(ArtPalette.paper)
                     .shadow(color: ArtPalette.terracotta.opacity(0.6), radius: 12)
-                    .padding(.horizontal, 16)    // room for the script's overhanging flourishes
-                    // Sweep a mask left to right so the name looks hand-written.
+                    .padding(.horizontal, 16)
                     .mask {
                         Rectangle().scaleEffect(x: nameRevealFraction, anchor: .leading)
                     }
@@ -80,15 +76,12 @@ struct IntroView: View {
         withAnimation(.easeOut(duration: 0.7).delay(0.5)) { isMadeForVisible = true }
         withAnimation(.easeInOut(duration: 1.1).delay(0.9)) { nameRevealFraction = 1 }
         withAnimation(.easeOut(duration: 0.6).delay(1.9)) { swashFraction = 1 }
-        // A beat after the name is finished, the dedication drifts in on its own.
         withAnimation(.easeOut(duration: 0.9).delay(2.7)) { isWithLoveVisible = true }
 
-        // Hold the finished composition for a moment before moving on.
         try? await Task.sleep(for: .seconds(4.4))
         finish()
     }
 
-    /// Guarded so a tap and the timer can't both end the intro.
     private func finish() {
         guard !hasFinished else { return }
         hasFinished = true

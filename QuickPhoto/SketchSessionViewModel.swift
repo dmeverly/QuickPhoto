@@ -154,8 +154,7 @@ final class SketchSessionViewModel {
         keepScreenAwake(false)
     }
 
-    /// Swaps in a different photo for the current pose (e.g. a reference she doesn't like)
-    /// and restarts that pose's timer. Doesn't count as a completed pose.
+
     func swapCurrentPhoto() {
         guard isSessionActive else { return }
         beginPose(at: currentPoseIndex)
@@ -211,7 +210,6 @@ final class SketchSessionViewModel {
             && remainingSecondsInPose <= warningLeadTimeInSeconds
     }
 
-    /// Sessions keep cycling through the photo set until she ends them.
     private func completeCurrentPose() {
         beginPose(at: currentPoseIndex + 1)
         soundPlayer.playNewPoseStartedCue()

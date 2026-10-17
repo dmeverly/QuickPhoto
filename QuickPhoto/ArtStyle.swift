@@ -37,7 +37,6 @@ extension Font {
 // MARK: - Animated backdrop
 
 /// Slowly drifting mesh of dark, warm colors with a fine paper grain on top,
-/// like pigment settling on a sheet of toned paper.
 struct ArtisticBackdrop: View {
     @Environment(\.accessibilityReduceMotion) private var isReduceMotionEnabled
 
@@ -137,7 +136,7 @@ struct BrushSwashShape: Shape {
     }
 }
 
-/// An ensō-style brush circle: an almost-closed loop painted in one gesture.
+/// The brush circle
 struct BrushCircleView: View {
     /// 0 = nothing painted yet, 1 = the full stroke.
     let paintedFraction: Double
@@ -145,7 +144,7 @@ struct BrushCircleView: View {
 
     var body: some View {
         ZStack {
-            // Main stroke, left slightly open the way a brush circle usually is.
+            // Main stroke
             Circle()
                 .trim(from: 0, to: paintedFraction * 0.93)
                 .stroke(
@@ -156,7 +155,7 @@ struct BrushCircleView: View {
                     style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
                 )
 
-            // A thin second pass, slightly offset, for a sketchy hand-drawn feel.
+            // Second pass
             Circle()
                 .trim(from: 0.04, to: 0.04 + paintedFraction * 0.8)
                 .stroke(ArtPalette.paper.opacity(0.35), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))

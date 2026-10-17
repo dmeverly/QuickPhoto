@@ -23,8 +23,7 @@ struct ShuffleBag<Element: Equatable> {
         return drawnElement
     }
 
-    /// Reshuffles the bag, making sure the photo shown last
-    /// isn't also the first one shown after the reshuffle.
+    /// Reshuffles the bag
     private mutating func refillAvoidingImmediateRepeat() {
         remainingElements = allElements.shuffled()
 
