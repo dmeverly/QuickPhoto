@@ -33,7 +33,7 @@ Your photos stay on your device. QuickPhoto has no accounts, no ads, no tracking
 Made for Lorelei, but you can use it too.
 
 ## Keywords (100, comma-separated, no spaces)
-gesture,drawing,sketch,figure,timer,reference,art,practice,pose,croquis,artist,study
+gesture,drawing,sketch,figure,timer,reference,art,practice,pose,croquis,artist,study,line action
 
 ## Category
 Primary: Graphics & Design
