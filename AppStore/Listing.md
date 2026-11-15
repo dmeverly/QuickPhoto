@@ -3,14 +3,12 @@
 Copy each field into App Store Connect. Character limits are Apple's.
 
 ## Name (30)
-QuickPhoto
+Quick Photo Gesture Drawing
 
-Backups if the name is taken:
-- QuickPhoto: Gesture Drawing
-- QuickPhoto Sketch Timer
+SKU: quickphoto-1
 
 ## Subtitle (30)
-Timed gesture drawing practice
+Sketch timer for your photos
 
 ## Promotional text (170)
 Practice gesture drawing with your own reference photos. Pick a time, press play, and sketch. A new photo appears when the timer runs out.
