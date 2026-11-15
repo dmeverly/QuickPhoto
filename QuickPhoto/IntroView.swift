@@ -9,7 +9,7 @@ struct IntroView: View {
     @State private var isMadeForVisible = false
     @State private var nameRevealFraction: Double = 0
     @State private var swashFraction: Double = 0
-    @State private var isWithLoveVisible = false
+    @State private var isInvitationVisible = false
     @State private var hasFinished = false
 
     var body: some View {
@@ -42,19 +42,19 @@ struct IntroView: View {
                     .stroke(ArtPalette.brushGradient, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                     .frame(width: 190, height: 18)
 
-                Text("with Love")
-                    .font(.artScript(size: 34, relativeTo: .title))
+                Text("but you can use it too")
+                    .font(.artSerif(.callout).italic())
                     .foregroundStyle(ArtPalette.ochre)
-                    .padding(.top, 6)
-                    .opacity(isWithLoveVisible ? 1 : 0)
-                    .blur(radius: isWithLoveVisible ? 0 : 6)
-                    .offset(y: isWithLoveVisible ? 0 : 10)
+                    .padding(.top, 10)
+                    .opacity(isInvitationVisible ? 1 : 0)
+                    .blur(radius: isInvitationVisible ? 0 : 6)
+                    .offset(y: isInvitationVisible ? 0 : 10)
             }
         }
         .contentShape(.rect)
         .onTapGesture { finish() }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Made for Lorelei, with Love")
+        .accessibilityLabel("Made for Lorelei, but you can use it too")
         .accessibilityAddTraits(.isButton)
         .accessibilityHint("Double-tap to skip")
         .task { await playIntro() }
@@ -66,7 +66,7 @@ struct IntroView: View {
             isMadeForVisible = true
             nameRevealFraction = 1
             swashFraction = 1
-            isWithLoveVisible = true
+            isInvitationVisible = true
             try? await Task.sleep(for: .seconds(2))
             finish()
             return
@@ -76,9 +76,9 @@ struct IntroView: View {
         withAnimation(.easeOut(duration: 0.7).delay(0.5)) { isMadeForVisible = true }
         withAnimation(.easeInOut(duration: 1.1).delay(0.9)) { nameRevealFraction = 1 }
         withAnimation(.easeOut(duration: 0.6).delay(1.9)) { swashFraction = 1 }
-        withAnimation(.easeOut(duration: 0.9).delay(2.7)) { isWithLoveVisible = true }
+        withAnimation(.easeOut(duration: 0.9).delay(3.3)) { isInvitationVisible = true }
 
-        try? await Task.sleep(for: .seconds(4.4))
+        try? await Task.sleep(for: .seconds(5.4))
         finish()
     }
 

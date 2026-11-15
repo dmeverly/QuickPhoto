@@ -67,10 +67,16 @@ final class SketchSessionViewModel {
     private let clockTickInterval: Duration = .milliseconds(100)
 
     init(
-        photoStorage: PhotoStorage = PhotoStorage(),
-        soundPlayer: SessionSoundPlayer = SessionSoundPlayer(),
-        settingsStore: SessionSettingsStore = SessionSettingsStore()
+        photoStorage: PhotoStorage? = nil,
+        soundPlayer: SessionSoundPlayer? = nil,
+        settingsStore: SessionSettingsStore? = nil
     ) {
+        // Defaults are built here rather than as default arguments, which are
+        // evaluated outside the main actor.
+        let photoStorage = photoStorage ?? PhotoStorage()
+        let soundPlayer = soundPlayer ?? SessionSoundPlayer()
+        let settingsStore = settingsStore ?? SessionSettingsStore()
+
         self.photoStorage = photoStorage
         self.soundPlayer = soundPlayer
         self.settingsStore = settingsStore
@@ -96,7 +102,7 @@ final class SketchSessionViewModel {
             guard let originalImageData = try? await pickerItem.loadTransferable(type: Data.self) else {
                 continue
             }
-            try? photoStorage.savePhoto(from: originalImageData)
+            _ = try? photoStorage.savePhoto(from: originalImageData)
         }
 
         reloadPhotoSet()
